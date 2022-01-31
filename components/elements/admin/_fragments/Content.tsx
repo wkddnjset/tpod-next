@@ -26,7 +26,6 @@ const Content = () => {
               <Tab _focus={{ boxShadow: 'none' }}>사용자 관리</Tab>
               <Tab _focus={{ boxShadow: 'none' }}>팀 관리</Tab>
             </TabList>
-
             <TabPanels>
               <TabPanel p="0">
                 <RoomManagement />

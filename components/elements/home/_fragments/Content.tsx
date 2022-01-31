@@ -12,6 +12,9 @@ const Content = () => {
           <Link href="/auth/start" passHref>
             <Button w="150px">로그인</Button>
           </Link>
+          <Link href="/toktokhan" passHref>
+            <Button w="150px">팀페이지</Button>
+          </Link>
         </VStack>
         <Text mt="20px">여기에 랜딩페이지 만들어질 예정!</Text>
       </Container>
