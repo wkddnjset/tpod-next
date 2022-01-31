@@ -22,7 +22,8 @@ const Content = () => {
     const { team } = router.query;
     console.log('team : ', team);
     console.log('data : ', data);
-    const hasedPassword = crypto.AES.encrypt(data.password, process.env.NEXT_PUBLIC_PASSWORD_SECRET).toString();
+    const secretKey = process.env.NEXT_PUBLIC_PASSWORD_SECRET ? process.env.NEXT_PUBLIC_PASSWORD_SECRET : '';
+    const hasedPassword = crypto.AES.encrypt(data.password, secretKey).toString();
     console.log('hasedPassword : ', hasedPassword);
   };
   return (
