@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 
 import { useDispatch } from 'react-redux';
-import { setEmail, setCheck, setError } from 'features/LoginForm/loginFormSlice';
+import { setEmail, setError, setIsRegister } from 'features/LoginForm/loginFormSlice';
 import { useRootState } from 'components/hooks/useRootState';
 
 import Text from 'components/common/Text';
@@ -15,20 +15,21 @@ import { EmailLoginFormType } from './type';
 
 import { passwordValidate, emailValidate } from 'utils/validate';
 
-const EmailForm = ({ brand, watch, register, errors, isLoading }: EmailLoginFormType) => {
+const EmailForm = ({ watch, register, errors }: EmailLoginFormType) => {
   // RTK
   const dispatch = useDispatch();
-  const { email, error, check } = useRootState((state) => state.LOGIN_FORM);
+  const { email, error, isRegister, isLoading } = useRootState((state) => state.LOGIN_FORM);
 
   const formData = watch();
 
-  console.log('errors : ', errors);
+  // console.log('formData : ', formData);
+  // console.log('errors : ', errors);
+
   return (
     <Flex direction="column" h="100%">
       <VStack w="100%" mb="15px" spacing="8px">
         <Box w="100%">
           <Input
-            name="email"
             type="text"
             autoComplete="off"
             placeholder="이메일"
@@ -38,7 +39,7 @@ const EmailForm = ({ brand, watch, register, errors, isLoading }: EmailLoginForm
               validate: emailValidate,
               onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                 dispatch(setEmail(e.target.value));
-                dispatch(setCheck({ isRegister: null, nickname: '' }));
+                dispatch(setIsRegister(null));
                 dispatch(setError({}));
               },
             })}
@@ -52,11 +53,10 @@ const EmailForm = ({ brand, watch, register, errors, isLoading }: EmailLoginForm
           )}
         </Box>
 
-        {check.isRegister !== null &&
-          (check.isRegister ? (
+        {isRegister !== null &&
+          (isRegister ? (
             <Box w="100%">
               <Input
-                name="password"
                 type="password"
                 autoComplete="off"
                 placeholder="비밀번호"
@@ -77,9 +77,8 @@ const EmailForm = ({ brand, watch, register, errors, isLoading }: EmailLoginForm
             <>
               <Box w="100%">
                 <Input
-                  autoComplete="off"
-                  name="nickname"
                   type="text"
+                  autoComplete="off"
                   placeholder="닉네임"
                   {...register('nickname', {
                     required: '빈칸을 입력해주세요.',
@@ -95,7 +94,6 @@ const EmailForm = ({ brand, watch, register, errors, isLoading }: EmailLoginForm
               </Box>
               <Box w="100%">
                 <Input
-                  name="password"
                   type="password"
                   autoComplete="off"
                   placeholder="비밀번호"
@@ -114,7 +112,6 @@ const EmailForm = ({ brand, watch, register, errors, isLoading }: EmailLoginForm
               </Box>
               <Box w="100%">
                 <Input
-                  name="passwordConfirm"
                   type="password"
                   autoComplete="off"
                   placeholder="비밀번호 확인"
@@ -133,39 +130,19 @@ const EmailForm = ({ brand, watch, register, errors, isLoading }: EmailLoginForm
                   </Text>
                 )}
               </Box>
-              {brand.fieldSet.map((field, idx) => {
-                return (
-                  <Box w="100%" key={idx}>
-                    <Input
-                      autoComplete="off"
-                      {...field}
-                      {...register(field.name, {
-                        required: '빈칸을 입력해주세요.',
-                      })}
-                      borderColor={formData[field.name] ? 'black' : 'transparent'}
-                      isInvalid={!!errors?.[field.name]?.message || !!error?.[field.name]}
-                    />
-                    {(!!errors?.[field.name]?.message || !!error?.[field.name]) && (
-                      <Text color="warning" textStyle="sm" textAlign="left" w="100%" mt="5px">
-                        {errors?.[field.name]?.message || error?.[field.name][0]}
-                      </Text>
-                    )}
-                  </Box>
-                );
-              })}
             </>
           ))}
       </VStack>
-      <Box h={email ? '100px' : '0px'} opacity={email ? 1 : 0} transition="0.3s">
+      <Box h={email ? '100px' : '0px'} opacity={email ? 1 : 0} transition="0.3s" overflow="hidden">
         <VStack spacing="20px">
           <Button w="100%" colorScheme={'dark'} type="submit" disabled={!email} isLoading={isLoading}>
-            <Text color="#FFFFFF">{check.isRegister !== null ? (check.isRegister ? '로그인' : '회원가입') : '다음'}</Text>
+            <Text color="white">{isRegister === null ? '다음' : isRegister ? '로그인' : '회원가입'}</Text>
           </Button>
-          <Link href="/" passHref>
-            <Text as="a" color="gray.700" cursor="pointer" decoration="underline">
-              이메일을 잊으셨나요?
-            </Text>
-          </Link>
+          <Text color="black" cursor="pointer" decoration="underline">
+            <Link href="/" passHref>
+              <a>이메일을 잊으셨나요?</a>
+            </Link>
+          </Text>
         </VStack>
       </Box>
     </Flex>

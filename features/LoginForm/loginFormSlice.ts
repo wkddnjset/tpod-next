@@ -1,10 +1,6 @@
 import Router from 'next/router';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface CheckType {
-  isRegister: boolean | null;
-  nickname?: string;
-}
 export interface LoginFormProps {
   email: string;
   more: boolean;
@@ -12,7 +8,9 @@ export interface LoginFormProps {
   code: string;
   token: string;
   isVerify: boolean;
-  check: CheckType;
+  isLoading: boolean;
+  isRegister: boolean | null;
+  nickname: string;
   error: any;
 }
 
@@ -23,10 +21,9 @@ const initialState: LoginFormProps = {
   code: '',
   token: '',
   isVerify: false,
-  check: {
-    isRegister: null,
-    nickname: '',
-  },
+  isLoading: false,
+  isRegister: null,
+  nickname: '',
   error: {},
 };
 
@@ -36,12 +33,12 @@ export const loginFormSlice = createSlice({
   reducers: {
     reset: () => initialState,
     setEmail: (state, action: PayloadAction<string>) => {
-      if (action.payload && Router.router?.asPath === '/start') {
-        Router.push('/start', '/start?type=email');
-      } else if (action.payload === '' && Router.router?.asPath !== '/start') {
-        Router.replace('/start');
-      }
       state.email = action.payload;
+      if (action.payload && Router.router?.asPath === '/auth/start') {
+        Router.push('/auth/start', '/auth/start?type=email');
+      } else if (action.payload === '' && Router.router?.asPath !== '/auth/start') {
+        Router.replace('/auth/start');
+      }
     },
     setMore: (state, action: PayloadAction<boolean>) => {
       state.more = action.payload;
@@ -58,15 +55,22 @@ export const loginFormSlice = createSlice({
     setIsVerify: (state, action: PayloadAction<boolean>) => {
       state.isVerify = action.payload;
     },
-    setCheck: (state, action: PayloadAction<CheckType>) => {
-      state.check = action.payload;
+    setIsRegister: (state, action: PayloadAction<boolean | null>) => {
+      state.isRegister = action.payload;
+    },
+    setNickname: (state, action: PayloadAction<string>) => {
+      state.nickname = action.payload;
     },
     setError: (state, action: PayloadAction<any>) => {
       state.error = action.payload;
     },
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
   },
 });
 
-export const { reset, setEmail, setMore, setPhone, setCode, setToken, setIsVerify, setCheck, setError } = loginFormSlice.actions;
+export const { reset, setEmail, setMore, setPhone, setCode, setToken, setIsVerify, setIsRegister, setError, setNickname, setIsLoading } =
+  loginFormSlice.actions;
 
 export default loginFormSlice;

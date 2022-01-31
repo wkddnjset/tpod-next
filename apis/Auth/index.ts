@@ -21,4 +21,12 @@ export default {
     const data = {};
     return data;
   },
+  emailRegister: async (variables: RegisterParameter): Promise<AuthParameter> => {
+    const { data } = await instance({
+      method: 'POST',
+      url: `/v1/user/email/register`,
+      data: variables,
+    });
+    return data;
+  },
 };

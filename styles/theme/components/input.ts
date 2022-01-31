@@ -19,16 +19,19 @@ const size: Record<string, any> = {
     px: 4,
     h: '54px',
   },
+
   md: {
     fontSize: 'md',
     px: 4,
     h: '54px',
   },
+
   sm: {
     fontSize: 'sm',
     px: 3,
     h: '54px',
   },
+
   xs: {
     fontSize: 'xs',
     px: 2,
@@ -194,7 +197,7 @@ const variants = {
 
 const defaultProps = {
   size: 'md',
-  variant: 'outline',
+  variant: 'filled',
 };
 
 const Input = {

@@ -2,6 +2,11 @@ interface EmailParameter {
   email: string;
   password?: string;
 }
+interface RegisterParameter {
+  email: string;
+  password?: string;
+  nickname: string;
+}
 
 interface EmailCheckParameter {
   email: string;

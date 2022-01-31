@@ -14,3 +14,9 @@ export const useEmailCheckMutation = (params?: MutationHookParams<typeof Auth.em
     ...params?.options,
   });
 };
+
+export const useEmailRegisterMutation = (params?: MutationHookParams<typeof Auth.emailRegister>) => {
+  return useMutation(Auth.emailRegister, {
+    ...params?.options,
+  });
+};

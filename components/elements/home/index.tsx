@@ -1,5 +1,7 @@
-import HomeLayout from 'components/common/@Layout/HomeLayout';
+import ContentLayout from 'components/common/@Layout/ContentLayout';
+
+import Content from './_fragments/Content';
 
 export function HomeContainer() {
-  return <HomeLayout />;
+  return <ContentLayout content={<Content />} />;
 }

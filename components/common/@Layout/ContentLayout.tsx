@@ -10,7 +10,7 @@ interface ContentLayoutProps {
 const ContentLayout = ({ header, content }: ContentLayoutProps) => {
   return (
     <>
-      <Box flexGrow={1}>{header}</Box>
+      <Box>{header}</Box>
       <Box>{content}</Box>
     </>
   );

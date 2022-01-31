@@ -25,20 +25,15 @@ export interface BrandProps {
   fieldSet: FieldType[];
 }
 
-export type ContentType = {
-  brand: BrandProps;
-};
-
 export type FormValues = {
   email: string;
-  password?: string;
+  nickname: string;
+  password: string;
   passwordConfirm?: string;
 };
 
 export interface EmailLoginFormType {
   register: any;
+  watch: any;
   errors: FieldErrors;
-  brand: BrandProps;
-  isLoading: boolean;
-  // socialToken: any;
 }
