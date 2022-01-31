@@ -40,7 +40,7 @@ const EmailLogin = () => {
     if (isRegister === null) {
       emailCheck(data.email)
         ?.then((res) => {
-          if (res) {
+          if (res !== null) {
             dispatch(setNickname(res.nickname));
             dispatch(setIsRegister(true));
           } else {

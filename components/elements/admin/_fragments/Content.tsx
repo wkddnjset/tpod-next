@@ -1,13 +1,24 @@
-import { Box, Container, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import { Box, Flex, Button, Container, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import { getAuth, signOut } from 'firebase/auth';
+import Router from 'next/router';
 
 import RoomManagement from './RoomManagement';
 import UserManagement from './UserManagement';
 import TeamManagement from './TeamManagement';
 
 const Content = () => {
+  const logout = () => {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      Router.push('/');
+    });
+  };
   return (
     <Box>
       <Container>
+        <Flex justifyContent="flex-end" py="10px">
+          <Button onClick={logout}>로그아웃</Button>
+        </Flex>
         <Box mt="80px">
           <Tabs>
             <TabList>
