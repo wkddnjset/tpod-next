@@ -2,12 +2,15 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
+import useGetProfile from '../../hooks/useGetProfile';
+
 import { FormValues } from './type';
 import LoginForm from './LoginForm';
 
 import crypto from 'crypto-js';
 
 const Content = () => {
+  const getProfile = useGetProfile;
   const router = useRouter();
 
   // react-hook-form
@@ -23,8 +26,8 @@ const Content = () => {
     console.log('team : ', team);
     console.log('data : ', data);
     const secretKey = process.env.NEXT_PUBLIC_PASSWORD_SECRET ? process.env.NEXT_PUBLIC_PASSWORD_SECRET : '';
-    const hasedPassword = crypto.AES.encrypt(data.password, secretKey).toString();
-    console.log('hasedPassword : ', hasedPassword);
+    const hasedPassword = crypto.HmacSHA256(data.password, secretKey);
+    getProfile(String(team), data.username, hasedPassword.toString());
   };
   return (
     <Flex direction="column">
