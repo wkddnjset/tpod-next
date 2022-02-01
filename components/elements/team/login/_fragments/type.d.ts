@@ -6,6 +6,7 @@ export type FormValues = {
 };
 
 export interface LoginFormType {
+  loading: boolean;
   register: any;
   watch: any;
   errors: FieldErrors;

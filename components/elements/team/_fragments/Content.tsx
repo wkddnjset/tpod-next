@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 
 import { StorageGetUser } from 'utils/Storage';
 
+import TimePicker from 'components/common/Timepicker';
+
 const Content = () => {
   const router = useRouter();
 
@@ -23,6 +25,7 @@ const Content = () => {
     <Box>
       <Container>
         <Text>룸룸룸룸</Text>
+        <TimePicker />
       </Container>
     </Box>
   );

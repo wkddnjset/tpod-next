@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -11,6 +12,7 @@ import crypto from 'crypto-js';
 
 const Content = () => {
   const getProfile = useGetProfile;
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   // react-hook-form
@@ -23,11 +25,15 @@ const Content = () => {
 
   const onSubmit = (data: FormValues) => {
     const { team } = router.query;
-    console.log('team : ', team);
-    console.log('data : ', data);
+
+    setLoading(true);
     const secretKey = process.env.NEXT_PUBLIC_PASSWORD_SECRET ? process.env.NEXT_PUBLIC_PASSWORD_SECRET : '';
     const hasedPassword = crypto.HmacSHA256(data.password, secretKey);
-    getProfile(String(team), data.username, hasedPassword.toString());
+    getProfile(String(team), data.username, hasedPassword.toString()).finally(() => {
+      setTimeout(() => {
+        setLoading(false);
+      }, 400);
+    });
   };
   return (
     <Flex direction="column">
@@ -38,7 +44,7 @@ const Content = () => {
       </Text>
       <Box>
         <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-          <LoginForm register={register} watch={watch} errors={errors} />
+          <LoginForm register={register} watch={watch} errors={errors} loading={loading} />
         </form>
       </Box>
     </Flex>

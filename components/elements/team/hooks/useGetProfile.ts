@@ -16,11 +16,12 @@ const useGetProfile = async (team: string, username: string, password: string) =
 
     if (querySnapshot.size > 0) {
       const user = querySnapshot.docs[0].data();
-      const userData = {
+      const userData: any = {
         uid: querySnapshot.docs[0].id,
         teamId: teamId,
         ...user,
       };
+      delete userData.password;
       StorageSetUser(userData).then(() => {
         const team = Router.router?.query?.team;
         Router.push(`/${team}`);

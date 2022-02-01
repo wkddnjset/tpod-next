@@ -6,7 +6,7 @@ import { Input, VStack, Button, Box, Flex } from '@chakra-ui/react';
 
 import { LoginFormType } from './type';
 
-const LoginForm = ({ watch, register, errors }: LoginFormType) => {
+const LoginForm = ({ watch, register, errors, loading }: LoginFormType) => {
   const formData = watch();
 
   return (
@@ -50,7 +50,7 @@ const LoginForm = ({ watch, register, errors }: LoginFormType) => {
       </VStack>
       <Box>
         <VStack spacing="20px">
-          <Button w="100%" colorScheme={'dark'} type="submit" disabled={!formData.username || !formData.password}>
+          <Button w="100%" colorScheme={'dark'} type="submit" disabled={!formData.username || !formData.password} isLoading={loading}>
             <Text color="white">로그인</Text>
           </Button>
         </VStack>
