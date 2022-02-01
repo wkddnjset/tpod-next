@@ -55,6 +55,16 @@ const TimePicker = () => {
       onMouseDown={mouseDownHandler}
       onMouseUp={mouseUpHandler}
       p="0px"
+      css={{
+        '&::-webkit-scrollbar': {
+          width: '0px',
+          height: '0px',
+        },
+        '&::-webkit-scrollbar-track': {
+          width: '0px',
+          height: '0px',
+        },
+      }}
     >
       <Flex pt="40px" pb="20px" px="10px" display="inline-flex">
         {new Array(24).fill(0).map((_, idx) => {
