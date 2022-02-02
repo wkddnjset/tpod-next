@@ -11,6 +11,7 @@ import LoginForm from './LoginForm';
 import crypto from 'crypto-js';
 
 const Content = () => {
+  let error: any;
   const getProfile = useGetProfile;
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -29,12 +30,19 @@ const Content = () => {
     setLoading(true);
     const secretKey = process.env.NEXT_PUBLIC_PASSWORD_SECRET ? process.env.NEXT_PUBLIC_PASSWORD_SECRET : '';
     const hasedPassword = crypto.HmacSHA256(data.password, secretKey);
-    getProfile(String(team), data.username, hasedPassword.toString()).finally(() => {
-      setTimeout(() => {
-        setLoading(false);
-      }, 400);
-    });
+    getProfile(String(team), data.username, hasedPassword.toString())
+      .then((res) => {
+        if (res === null) {
+          alert('잘못된 계정입니다.\n팀별 관리자에게 문의해주세요.');
+        }
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setLoading(false);
+        }, 400);
+      });
   };
+
   return (
     <Flex direction="column">
       <Text textStyle="xl" mb={['50px', '60px', '80px']} textAlign="center">

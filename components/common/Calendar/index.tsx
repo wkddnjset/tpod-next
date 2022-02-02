@@ -37,43 +37,41 @@ const Calendar = ({ handleDayClick }: Props) => {
     // 이제 주마다 일을 표기해야 하므로 len이 7인 arr를 생성 후 index를 기반으로 day를 표기하자
     for (let week = startWeek; week <= endWeek; week++) {
       calendar.push(
-        <>
-          <Tr key={week} mt="5px">
-            {Array(7)
-              .fill(0)
-              .map((n, i) => {
-                // 오늘 => 주어진 주의 시작 => n + i일 만큼 더해서 각 주의 '일'을 표기한다.
-                const current = today
-                  .clone()
-                  .week(week)
-                  .startOf('week')
-                  .add(n + i, 'day');
-                // 오늘이 current와 같다면 우선 '선택'으로 두자
-                const isSelected = today.format('YYYYMMDD') === current.format('YYYYMMDD') ? 'selected' : '';
+        <Tr key={week} mt="5px">
+          {Array(7)
+            .fill(0)
+            .map((n, i) => {
+              // 오늘 => 주어진 주의 시작 => n + i일 만큼 더해서 각 주의 '일'을 표기한다.
+              const current = today
+                .clone()
+                .week(week)
+                .startOf('week')
+                .add(n + i, 'day');
+              // 오늘이 current와 같다면 우선 '선택'으로 두자
+              const isSelected = today.format('YYYYMMDD') === current.format('YYYYMMDD') ? 'selected' : '';
 
-                // 만약, 이번 달이 아닌 다른 달의 날짜라면 회색으로 표시하자
-                const isRed = i === 0;
-                const isGrayed = current.format('MM') !== today.format('MM') ? 'grayed' : '';
+              // 만약, 이번 달이 아닌 다른 달의 날짜라면 회색으로 표시하자
+              const isRed = i === 0;
+              const isGrayed = current.format('MM') !== today.format('MM') ? 'grayed' : '';
 
-                return (
-                  <Td
-                    key={current.format('YYYYMMDD')}
-                    onClick={() => _handleDayClick(current)}
-                    cursor="pointer"
-                    borderTopWidth="1px"
-                    borderLeftWidth="1px"
-                    p="0px"
-                    h="40px"
-                    bg={isSelected ? 'primary.500' : 'white'}
-                  >
-                    <Text fontSize="14px" textAlign="center" color={isSelected ? 'white' : isGrayed ? 'gray.200' : isRed ? 'red' : 'gray.500'}>
-                      {current.format('D')}
-                    </Text>
-                  </Td>
-                );
-              })}
-          </Tr>
-        </>,
+              return (
+                <Td
+                  key={current.format('YYYYMMDD')}
+                  onClick={() => _handleDayClick(current)}
+                  cursor="pointer"
+                  borderTopWidth="1px"
+                  borderLeftWidth="1px"
+                  p="0px"
+                  h="40px"
+                  bg={isSelected ? 'primary.500' : 'white'}
+                >
+                  <Text fontSize="14px" textAlign="center" color={isSelected ? 'white' : isGrayed ? 'gray.200' : isRed ? 'red' : 'gray.500'}>
+                    {current.format('D')}
+                  </Text>
+                </Td>
+              );
+            })}
+        </Tr>,
       );
     }
     return calendar;
