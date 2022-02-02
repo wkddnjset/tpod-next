@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Box, Container, Text, Button, VStack } from '@chakra-ui/react';
 
-import TimePicker from 'components/common/Timepicker';
+import TimePicker from 'components/common/TimePicker';
 
 const Content = () => {
   return (
