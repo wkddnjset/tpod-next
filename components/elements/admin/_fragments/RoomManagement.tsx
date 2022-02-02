@@ -1,17 +1,27 @@
+import { useEffect, useState } from 'react';
 import { Box, SimpleGrid, AspectRatio } from '@chakra-ui/react';
 
 import UploadButton from 'components/common/@Icons/System/UploadButton2';
 import RoomCard from 'components/common/RoomCard';
 
-const DATA = [
-  { name: '제 1 회의실', capacity: 3 },
-  { name: '제 2 회의실', capacity: 6 },
-];
+import useGetMyRooms from '../hooks/useGetMyRooms';
+
 const RoomManagement = () => {
+  const [rooms, setRooms] = useState<any>([]);
+  const getMyRooms = useGetMyRooms;
+
+  useEffect(() => {
+    const init = async () => {
+      const roomData = await getMyRooms();
+      setRooms(roomData);
+    };
+    init();
+  }, []);
+
   return (
     <Box pt="40px">
       <SimpleGrid columns={[4]} spacing="10px">
-        {DATA.map((d, idx) => {
+        {rooms?.map((d: any, idx: number) => {
           return <RoomCard data={d} key={idx} isAdmin />;
         })}
         <AspectRatio ratio={0.8}>

@@ -1,22 +1,40 @@
 import { useEffect, useState } from 'react';
 import { Box, Checkbox, Flex, Button, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
 
-import useGetMember from '../hooks/useGetMember';
-
-const DATA = [
-  { id: 1, name: '서장원', username: 'wkddnjset', created: '2021.01.02', uid: 'ETzWVdqLbZQpDYT1V6zGF62CbPs1', isChecked: true },
-  { id: 2, name: '박수지', username: 'sujipark', created: '2021.01.02', uid: 'ETzWVdqLbZQpDYT1V6zGF62CbPs1', isChecked: false },
-];
+import useGetMembers from '../hooks/useGetMembers';
+import moment from 'moment';
 
 const MemberManagement = () => {
-  const [checkList, setCheckList] = useState<any>([]);
+  const [checkList, setCheckList] = useState<string[]>([]);
   const [members, setMembers] = useState<any>([]);
-  const getMember = useGetMember;
+  const getMember = useGetMembers;
+
+  const toggleCheckList = (e: any, uid: string) => {
+    if (e.target.checked) {
+      setCheckList([uid, ...checkList]);
+    } else {
+      const curCheckList = JSON.parse(JSON.stringify(checkList));
+      const idx = curCheckList.findIndex((a: string) => a === uid);
+      curCheckList.splice(idx, 1);
+      setCheckList(curCheckList);
+    }
+  };
+
+  const toggleAll = (e: any) => {
+    if (e.target.checked) {
+      const list: string[] = [];
+      members.forEach((member: any) => {
+        list.push(member.uid);
+      });
+      setCheckList(list);
+    } else {
+      setCheckList([]);
+    }
+  };
 
   useEffect(() => {
     const init = async () => {
       const memberData = await getMember();
-      console.log('memberData : ', memberData);
       setMembers(memberData);
     };
     init();
@@ -36,7 +54,7 @@ const MemberManagement = () => {
         <Thead>
           <Tr>
             <Th>
-              <Checkbox />
+              <Checkbox isChecked={checkList.length === members.length} onChange={toggleAll} />
             </Th>
             <Th>이름</Th>
             <Th>아이디</Th>
@@ -49,11 +67,11 @@ const MemberManagement = () => {
             return (
               <Tr key={idx}>
                 <Td>
-                  <Checkbox isChecked={checkList.includes(member.uid)} />
+                  <Checkbox isChecked={checkList.includes(member.uid)} onChange={(val) => toggleCheckList(val, member.uid)} />
                 </Td>
                 <Td>{member.name}</Td>
                 <Td>{member.username}</Td>
-                <Td>{member.created}</Td>
+                <Td>{moment(member.created.toDate()).format('YYYY.MM.DD')}</Td>
                 <Td>{member.uid}</Td>
               </Tr>
             );
