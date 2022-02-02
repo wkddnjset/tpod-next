@@ -1,5 +1,5 @@
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDoc } from 'firebase/firestore';
 
 const useEmailRegister = async (email: string, password: string, nickname: string) => {
   const auth = getAuth();

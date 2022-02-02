@@ -3,7 +3,7 @@ import { getAuth, signOut } from 'firebase/auth';
 import Router from 'next/router';
 
 import RoomManagement from './RoomManagement';
-import UserManagement from './UserManagement';
+import MemberManagement from './MemberManagement';
 import TeamManagement from './TeamManagement';
 
 const Content = () => {
@@ -31,7 +31,7 @@ const Content = () => {
                 <RoomManagement />
               </TabPanel>
               <TabPanel p="0">
-                <UserManagement />
+                <MemberManagement />
               </TabPanel>
               <TabPanel p="0">
                 <TeamManagement />

@@ -1,11 +1,27 @@
+import { useEffect, useState } from 'react';
 import { Box, Checkbox, Flex, Button, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
+
+import useGetMember from '../hooks/useGetMember';
 
 const DATA = [
   { id: 1, name: '서장원', username: 'wkddnjset', created: '2021.01.02', uid: 'ETzWVdqLbZQpDYT1V6zGF62CbPs1', isChecked: true },
   { id: 2, name: '박수지', username: 'sujipark', created: '2021.01.02', uid: 'ETzWVdqLbZQpDYT1V6zGF62CbPs1', isChecked: false },
 ];
 
-const UserManagement = () => {
+const MemberManagement = () => {
+  const [checkList, setCheckList] = useState<any>([]);
+  const [members, setMembers] = useState<any>([]);
+  const getMember = useGetMember;
+
+  useEffect(() => {
+    const init = async () => {
+      const memberData = await getMember();
+      console.log('memberData : ', memberData);
+      setMembers(memberData);
+    };
+    init();
+  }, []);
+
   return (
     <Box py="15px">
       <Flex justifyContent="flex-end" mb="20px">
@@ -29,16 +45,16 @@ const UserManagement = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {DATA.map((d, idx) => {
+          {members?.map((member: any, idx: number) => {
             return (
               <Tr key={idx}>
                 <Td>
-                  <Checkbox isChecked={d.isChecked} />
+                  <Checkbox isChecked={checkList.includes(member.uid)} />
                 </Td>
-                <Td>{d.name}</Td>
-                <Td>{d.username}</Td>
-                <Td>{d.created}</Td>
-                <Td>{d.uid}</Td>
+                <Td>{member.name}</Td>
+                <Td>{member.username}</Td>
+                <Td>{member.created}</Td>
+                <Td>{member.uid}</Td>
               </Tr>
             );
           })}
@@ -48,4 +64,4 @@ const UserManagement = () => {
   );
 };
 
-export default UserManagement;
+export default MemberManagement;

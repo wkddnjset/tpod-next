@@ -11,7 +11,6 @@ import LoginForm from './LoginForm';
 import crypto from 'crypto-js';
 
 const Content = () => {
-  let error: any;
   const getProfile = useGetProfile;
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -28,8 +27,8 @@ const Content = () => {
     const { team } = router.query;
 
     setLoading(true);
-    const secretKey = process.env.NEXT_PUBLIC_PASSWORD_SECRET ? process.env.NEXT_PUBLIC_PASSWORD_SECRET : '';
-    const hasedPassword = crypto.HmacSHA256(data.password, secretKey);
+    const secretKey = process.env.NEXT_PUBLIC_PASSWORD_SECRET;
+    const hasedPassword = crypto.HmacSHA256(data.password, String(secretKey));
     getProfile(String(team), data.username, hasedPassword.toString())
       .then((res) => {
         if (res === null) {

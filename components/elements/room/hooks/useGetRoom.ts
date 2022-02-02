@@ -8,7 +8,7 @@ const useGetRoom = async (roomId: string) => {
   const db = getFirestore();
 
   const user = await StorageGetUser();
-  console.log('user: ', user);
+
   if (!user) {
     alert('잘못된 접근 입니다.');
     Router.replace('/');

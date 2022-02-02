@@ -16,6 +16,7 @@ const Content = () => {
   const [room, setRoom] = useState<any>(null);
   const [date, setDate] = useState<moment.Moment>(() => moment());
   const [time, setTime] = useState<{ start: number; end: number }>({ start: -1, end: -1 });
+
   const router = useRouter();
   const handleDayClick = (current: moment.Moment) => setDate(current);
   const handleTimeClick = (pickTime: { start: number; end: number }) => setTime(pickTime);
