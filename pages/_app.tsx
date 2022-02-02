@@ -7,7 +7,6 @@ import { ThemeProvider, useColorMode, useTheme } from '@chakra-ui/react';
 import { mode } from 'styles/theme/foundations/colors';
 
 import { withChakraProvider } from 'styles/provider';
-import ToggleColorModeButton from 'components/common/ToggleColorModeButton';
 
 import { useEffect } from 'react';
 
@@ -49,7 +48,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={{ ...theme, colors: { ...theme.colors, ...mode[colorMode] } }}>
-          <ToggleColorModeButton />
           <Component {...pageProps} />
         </ThemeProvider>
         <ReactQueryDevtools initialIsOpen={false} />

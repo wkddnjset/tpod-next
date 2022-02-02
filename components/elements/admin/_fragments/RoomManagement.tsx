@@ -1,29 +1,18 @@
-import { Box, Text, Flex, Button, SimpleGrid, AspectRatio } from '@chakra-ui/react';
+import { Box, SimpleGrid, AspectRatio } from '@chakra-ui/react';
 
 import UploadButton from 'components/common/@Icons/System/UploadButton2';
+import RoomCard from 'components/common/RoomCard';
 
 const DATA = [
-  { title: '제 1 회의실', capacity: 3 },
-  { title: '제 2 회의실', capacity: 6 },
+  { name: '제 1 회의실', capacity: 3 },
+  { name: '제 2 회의실', capacity: 6 },
 ];
 const RoomManagement = () => {
   return (
     <Box pt="40px">
       <SimpleGrid columns={[4]} spacing="10px">
         {DATA.map((d, idx) => {
-          return (
-            <AspectRatio ratio={0.8} key={idx}>
-              <Box w="100%" borderColor="gray.600" borderWidth="1px" borderRadius="10px">
-                <Flex direction="column" alignItems="center">
-                  <Text textStyle="md">{d.title}</Text>
-                  <Text textStyle="sm">인원 : {d.capacity}명</Text>
-                  <Button size="sm" mt="10px" colorScheme="red">
-                    삭제하기
-                  </Button>
-                </Flex>
-              </Box>
-            </AspectRatio>
-          );
+          return <RoomCard data={d} key={idx} isAdmin />;
         })}
         <AspectRatio ratio={0.8}>
           <Box w="100%" borderColor="gray.600" borderWidth="1px" borderRadius="10px" cursor="pointer">

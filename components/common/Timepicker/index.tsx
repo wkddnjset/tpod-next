@@ -11,7 +11,9 @@ const TimePicker = () => {
   const [pickTime, setPickTime] = useState<any>({ start: 6, end: 10 });
 
   const onScrollHandler = () => {
-    setEndPos(timepickerRef.current.scrollLeft);
+    if (!active) {
+      setEndPos(timepickerRef.current.scrollLeft);
+    }
   };
   const mouseDownHandler = (e: any) => {
     setActive(true);
@@ -20,15 +22,16 @@ const TimePicker = () => {
     timepickerRef.current.style.userSelect = 'none';
   };
   const mouseUpHandler = (e: any) => {
-    setActive(false);
     timepickerRef.current.style.cursor = 'grab';
     setEndPos(startPos - e.clientX + endPos);
+    setActive(false);
   };
   const mouseMoveHandler = (e: any) => {
     if (active) {
       timepickerRef.current.scrollLeft = startPos - e.clientX + endPos;
     }
   };
+
   const handlePickTime = (time: number) => {
     const disabled = disabledTime.includes(time);
     if (!disabled) {
@@ -81,7 +84,7 @@ const TimePicker = () => {
                 borderWidth="1px"
                 borderColor={disabled ? 'gray.400' : isActive ? 'green.400' : 'blue.400'}
                 cursor="pointer"
-                onClick={() => handlePickTime(idx)}
+                onClick={() => !active && handlePickTime(idx)}
               >
                 {idx === 0 && (
                   <Text w="20px" position="absolute" fontSize="10px" top="-35px" left="-10px" textAlign="center">
