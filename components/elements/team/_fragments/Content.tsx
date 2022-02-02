@@ -24,7 +24,7 @@ const Content = () => {
           setTeam(teamData);
         }
       } else {
-        router.push(`/${team}/login`);
+        router.replace(`/${team}/login`);
       }
     };
     init();

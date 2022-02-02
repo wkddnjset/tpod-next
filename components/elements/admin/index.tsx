@@ -11,7 +11,7 @@ export function AdminContainer() {
       const auth = await getAuth();
       onAuthStateChanged(auth, (user) => {
         if (!user) {
-          Router.push('/auth/start');
+          Router.replace('/auth/start');
         }
       });
     };
