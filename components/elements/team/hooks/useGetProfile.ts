@@ -5,13 +5,12 @@ import { StorageSetUser } from 'utils/Storage';
 const useGetProfile = async (team: string, username: string, password: string) => {
   const db = getFirestore();
   const teamRef = collection(db, 'team');
-  const teamQ = query(teamRef, where('name', '==', team));
+  const teamQ = query(teamRef, where('slug', '==', team));
   const teamQuerySnapshot = await getDocs(teamQ);
 
   if (teamQuerySnapshot.size > 0) {
     const teamId = teamQuerySnapshot.docs[0].id;
     const memberRef = collection(db, `team/${teamId}/member`);
-
     const q = query(memberRef, where('username', '==', username), where('password', '==', password));
     const querySnapshot = await getDocs(q);
 

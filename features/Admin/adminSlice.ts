@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface TeamProps {
   name: string;
+  slug: string;
 }
 export interface AdminProps {
   team: TeamProps;
@@ -10,6 +11,7 @@ export interface AdminProps {
 const initialState: AdminProps = {
   team: {
     name: '',
+    slug: '',
   },
 };
 

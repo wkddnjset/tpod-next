@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Router from 'next/router';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-import ContentLayout from 'components/common/@Layout/ContentLayout';
+import UserLayout from 'components/common/@Layout/UserLayout';
 import Content from './_fragments/Content';
 
 export function AdminContainer() {
@@ -17,5 +17,5 @@ export function AdminContainer() {
     };
     checkIsLogin();
   }, []);
-  return <ContentLayout content={<Content />} />;
+  return <UserLayout content={<Content />} />;
 }

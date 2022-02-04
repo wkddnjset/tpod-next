@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, query, collection, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 const useGetMyTeam = async () => {
   const auth = await getAuth();
@@ -11,11 +11,10 @@ const useGetMyTeam = async () => {
         const docRef = doc(db, 'team', user.uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          console.log('Document data:');
           resolve(docSnap.data());
         } else {
           // doc.data() will be undefined in this case
-          resolve({ name: '' });
+          resolve({ name: '', slug: '' });
         }
       } else {
         reject('계정 문제');

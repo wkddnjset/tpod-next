@@ -1,14 +1,29 @@
 import { useEffect, useState } from 'react';
-import { Box, Checkbox, Flex, Button, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
+import { Box, Checkbox, Flex, Button, Table, Thead, Tbody, Tr, Th, Td, useDisclosure } from '@chakra-ui/react';
+
+import CreateMember from './Modal/CreateMember';
 
 import useGetMembers from '../hooks/useGetMembers';
+import useDeleteMember from '../hooks/useDeleteMember';
+
 import moment from 'moment';
 
 const MemberManagement = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const [checkList, setCheckList] = useState<string[]>([]);
   const [members, setMembers] = useState<any>([]);
+
+  const deleteMember = useDeleteMember;
   const getMember = useGetMembers;
 
+  const onDeleteMember = () => {
+    setCheckList([]);
+    deleteMember(checkList).then(async () => {
+      const memberData = await getMember();
+      setMembers(memberData);
+    });
+  };
   const toggleCheckList = (e: any, uid: string) => {
     if (e.target.checked) {
       setCheckList([uid, ...checkList]);
@@ -38,46 +53,49 @@ const MemberManagement = () => {
       setMembers(memberData);
     };
     init();
-  }, []);
+  }, [isOpen]);
 
   return (
     <Box py="15px">
+      <CreateMember isOpen={isOpen} onClose={onClose} />
       <Flex justifyContent="flex-end" mb="20px">
-        <Button size="sm" colorScheme="red">
+        <Button size="sm" colorScheme="red" disabled={checkList.length < 1} onClick={onDeleteMember}>
           선택삭제
         </Button>
-        <Button size="sm" colorScheme="facebook" ml="5px">
+        <Button size="sm" colorScheme="facebook" ml="5px" onClick={onOpen}>
           사용자생성
         </Button>
       </Flex>
-      <Table variant="simple">
-        <Thead>
-          <Tr>
-            <Th>
-              <Checkbox isChecked={checkList.length === members.length} onChange={toggleAll} />
-            </Th>
-            <Th>이름</Th>
-            <Th>아이디</Th>
-            <Th>생성날짜</Th>
-            <Th>UID</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {members?.map((member: any, idx: number) => {
-            return (
-              <Tr key={idx}>
-                <Td>
-                  <Checkbox isChecked={checkList.includes(member.uid)} onChange={(val) => toggleCheckList(val, member.uid)} />
-                </Td>
-                <Td>{member.name}</Td>
-                <Td>{member.username}</Td>
-                <Td>{moment(member.created.toDate()).format('YYYY.MM.DD')}</Td>
-                <Td>{member.uid}</Td>
-              </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
+      <Box overflow="auto">
+        <Table variant="simple">
+          <Thead>
+            <Tr>
+              <Th>
+                <Checkbox isChecked={checkList.length === members.length} onChange={toggleAll} />
+              </Th>
+              <Th>이름</Th>
+              <Th>아이디</Th>
+              <Th>생성날짜</Th>
+              <Th>UID</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {members?.map((member: any, idx: number) => {
+              return (
+                <Tr key={idx}>
+                  <Td>
+                    <Checkbox isChecked={checkList.includes(member.uid)} onChange={(val) => toggleCheckList(val, member.uid)} />
+                  </Td>
+                  <Td>{member.name}</Td>
+                  <Td>{member.username}</Td>
+                  <Td>{moment(member.created.toDate()).format('YYYY.MM.DD')}</Td>
+                  <Td>{member.uid}</Td>
+                </Tr>
+              );
+            })}
+          </Tbody>
+        </Table>
+      </Box>
     </Box>
   );
 };
