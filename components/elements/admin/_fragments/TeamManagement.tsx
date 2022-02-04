@@ -3,14 +3,20 @@ import { useEffect, useState } from 'react';
 import { Box, Input, Flex, Button } from '@chakra-ui/react';
 import useGetMyTeam from '../hooks/useGetMyTeam';
 
+import { setTeam, TeamProps } from 'features/Admin/adminSlice';
+import { useDispatch } from 'react-redux';
+import { useRootState } from 'components/hooks/useRootState';
+
 const TeamManagement = () => {
-  const [team, setTeam] = useState<any>(null);
+  const dispatch = useDispatch();
+  const { team } = useRootState((state) => state.ADMIN);
+
   const getMyTeam = useGetMyTeam;
 
   useEffect(() => {
     const init = async () => {
-      const teamData = await getMyTeam();
-      setTeam(teamData);
+      const teamData: TeamProps = await getMyTeam();
+      dispatch(setTeam(teamData));
     };
     init();
   }, []);

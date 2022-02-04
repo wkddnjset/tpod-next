@@ -15,7 +15,7 @@ const useGetMyTeam = async () => {
           resolve(docSnap.data());
         } else {
           // doc.data() will be undefined in this case
-          resolve(null);
+          resolve({ name: '' });
         }
       } else {
         reject('계정 문제');

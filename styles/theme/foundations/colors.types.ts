@@ -12,17 +12,11 @@ type ColorProps = {
 };
 type Color = {
   primary: ColorProps;
-  secondary: string;
+  secondary: ColorProps;
   tertiary: string;
-  'primary.sub': string;
-  'secondary.sub': string;
-  'tertiary.sub': string;
   point: string;
-  'point.sub': string;
   warning: string;
-  'warning.sub': string;
   success: string;
-  'success.sub': string;
   black: string;
   white: string;
   dark: ColorProps;

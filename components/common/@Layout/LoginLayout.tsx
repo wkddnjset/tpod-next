@@ -8,8 +8,8 @@ interface LoginLayoutProps {
 
 const LoginLayout = ({ content }: LoginLayoutProps) => {
   return (
-    <Flex h="100vh" backgroundColor="white" alignItems="center" justifyContent="center">
-      <Box w="100%" maxW="420px" mx="auto">
+    <Flex h={['auto', '100vh']} pt={['50px', '0px']} backgroundColor="white" alignItems="center" justifyContent="center">
+      <Box w="100%" maxW="420px" mx="auto" px="16px">
         {content}
       </Box>
     </Flex>
