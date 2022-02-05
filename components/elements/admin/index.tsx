@@ -1,21 +1,27 @@
 import { useEffect } from 'react';
 import Router from 'next/router';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
+import { setUser } from 'features/Admin/adminSlice';
+import { useDispatch } from 'react-redux';
 
 import UserLayout from 'components/common/@Layout/UserLayout';
 import Content from './_fragments/Content';
 
+import useGetUser from './hooks/useGetUser';
+
 export function AdminContainer() {
+  const dispatch = useDispatch();
+
+  const getUser = useGetUser;
   useEffect(() => {
-    const checkIsLogin = async () => {
-      const auth = await getAuth();
-      onAuthStateChanged(auth, (user) => {
-        if (!user) {
-          Router.replace('/auth/start');
-        }
+    getUser()
+      .then((res: any) => {
+        console.log('res : ', res);
+        dispatch(setUser(res));
+      })
+      .catch(() => {
+        Router.replace('/auth/start');
       });
-    };
-    checkIsLogin();
   }, []);
   return <UserLayout content={<Content />} />;
 }

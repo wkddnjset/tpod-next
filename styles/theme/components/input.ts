@@ -73,9 +73,8 @@ const variantOutline: StyleObjectOrFn = (props) => {
   return {
     field: {
       border: '1px solid',
-      borderColor: 'inherit',
       borderRadius: 'md',
-      bg: 'inherit',
+      'border-color': '#DFDFDF',
       _hover: {
         borderColor: mode('gray.300', 'whiteAlpha.400')(props),
       },

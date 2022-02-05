@@ -1,6 +1,10 @@
-import { Box, Flex, Button, Container, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import { Box, Flex, Button, Container, Tabs, TabList, TabPanels, Tab, TabPanel, Text } from '@chakra-ui/react';
+import { Alert, AlertIcon, CloseButton } from '@chakra-ui/react';
 import { getAuth, signOut } from 'firebase/auth';
 import Router from 'next/router';
+import { useRootState } from 'components/hooks/useRootState';
+
+import moment from 'moment';
 
 import RoomManagement from './RoomManagement';
 import MemberManagement from './MemberManagement';
@@ -8,14 +12,32 @@ import TeamManagement from './TeamManagement';
 import PaymentManagement from './PaymentManagement';
 
 const Content = () => {
+  const { user } = useRootState((state) => state.ADMIN);
+
   const logout = () => {
     const auth = getAuth();
     signOut(auth).then(() => {
       Router.push('/');
     });
   };
+  const range = moment(user.freeTrial).diff(moment(), 'days');
   return (
     <Box>
+      {range > 0 && (
+        <Alert status="error">
+          <AlertIcon />
+          <Box>
+            <Text textStyle="md" fontWeight="bold">
+              무료 사용 기간이 {range}일 남았습니다.
+            </Text>
+            <Text textStyle="sm" mt="-3px">
+              결제정보를 등록해주세요.
+            </Text>
+          </Box>
+          <CloseButton position="absolute" right="8px" top="8px" />
+        </Alert>
+      )}
+
       <Container>
         <Flex justifyContent="flex-end" py="10px">
           <Button onClick={logout}>로그아웃</Button>

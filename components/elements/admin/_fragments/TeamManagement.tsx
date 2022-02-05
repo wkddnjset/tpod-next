@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { Box, Input, Flex, Button, Text, VStack } from '@chakra-ui/react';
 import useGetMyTeam from '../hooks/useGetMyTeam';
