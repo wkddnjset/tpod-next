@@ -5,6 +5,7 @@ import Router from 'next/router';
 import RoomManagement from './RoomManagement';
 import MemberManagement from './MemberManagement';
 import TeamManagement from './TeamManagement';
+import PaymentManagement from './PaymentManagement';
 
 const Content = () => {
   const logout = () => {
@@ -22,9 +23,18 @@ const Content = () => {
         <Box mt="80px">
           <Tabs>
             <TabList>
-              <Tab _focus={{ boxShadow: 'none' }}>회의실 관리</Tab>
-              <Tab _focus={{ boxShadow: 'none' }}>사용자 관리</Tab>
-              <Tab _focus={{ boxShadow: 'none' }}>팀 관리</Tab>
+              <Tab fontSize="sm" _focus={{ boxShadow: 'none' }}>
+                회의실
+              </Tab>
+              <Tab fontSize="sm" _focus={{ boxShadow: 'none' }}>
+                사용자
+              </Tab>
+              <Tab fontSize="sm" _focus={{ boxShadow: 'none' }}>
+                팀 정보
+              </Tab>
+              <Tab fontSize="sm" _focus={{ boxShadow: 'none' }}>
+                결제 정보
+              </Tab>
             </TabList>
             <TabPanels>
               <TabPanel p="0">
@@ -35,6 +45,9 @@ const Content = () => {
               </TabPanel>
               <TabPanel p="0">
                 <TeamManagement />
+              </TabPanel>
+              <TabPanel p="0">
+                <PaymentManagement />
               </TabPanel>
             </TabPanels>
           </Tabs>

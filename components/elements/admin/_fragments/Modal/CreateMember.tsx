@@ -52,7 +52,7 @@ const CreateMember = ({ isOpen, onClose }: any) => {
   return (
     <Modal isOpen={isOpen} closeOnOverlayClick={false} onClose={handleClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent mx="16px">
         <ModalHeader>사용자 생성하기</ModalHeader>
         <ModalCloseButton />
         <form onSubmit={handleSubmit(onSubmit)}>

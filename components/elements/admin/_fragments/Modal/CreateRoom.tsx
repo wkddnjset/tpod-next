@@ -28,14 +28,14 @@ const CreateRoom = ({ isOpen, onClose }: any) => {
   return (
     <Modal isOpen={isOpen} closeOnOverlayClick={false} onClose={handleClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent mx="16px">
         <ModalHeader>회의실 생성하기</ModalHeader>
         <ModalCloseButton />
         <form onSubmit={handleSubmit(onSubmit)}>
           <ModalBody>
             <VStack>
               <Box w="100%">
-                <Input type="tel" placeholder="회의실 이름" isInvalid={!!errors?.name?.message} {...register('name', { required: '빈칸을 입력해주세요.' })} />
+                <Input type="text" placeholder="회의실 이름" isInvalid={!!errors?.name?.message} {...register('name', { required: '빈칸을 입력해주세요.' })} />
                 {!!errors?.name?.message && (
                   <Text color="warning" textStyle="sm" textAlign="left" w="100%" mt="5px">
                     {errors?.name?.message}
@@ -44,7 +44,7 @@ const CreateRoom = ({ isOpen, onClose }: any) => {
               </Box>
               <Box w="100%">
                 <Input
-                  type="number"
+                  type="tel"
                   placeholder="수용인원"
                   isInvalid={!!errors?.capacity?.message}
                   {...register('capacity', { required: '빈칸을 입력해주세요.' })}

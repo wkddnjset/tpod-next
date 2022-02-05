@@ -74,7 +74,7 @@ const variantOutline: StyleObjectOrFn = (props) => {
     field: {
       border: '1px solid',
       borderColor: 'inherit',
-      borderRadius: 0,
+      borderRadius: 'md',
       bg: 'inherit',
       _hover: {
         borderColor: mode('gray.300', 'whiteAlpha.400')(props),
@@ -88,10 +88,11 @@ const variantOutline: StyleObjectOrFn = (props) => {
         cursor: 'not-allowed',
       },
       _invalid: {
-        borderColor: getColor(theme, ec),
-        boxShadow: `0 0 0 1px ${getColor(theme, ec)}`,
+        borderColor: `${getColor(theme, ec)} !important`,
+        boxShadow: `0 0 0 1px ${getColor(theme, ec)} !important`,
       },
       _focus: {
+        boxShadow: `0 0 0 1px ${getColor(theme, fc)}`,
         borderColor: getColor(theme, fc),
       },
     },
@@ -197,7 +198,7 @@ const variants = {
 
 const defaultProps = {
   size: 'md',
-  variant: 'filled',
+  variant: 'outline',
 };
 
 const Input = {

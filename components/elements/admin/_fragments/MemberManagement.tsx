@@ -73,10 +73,10 @@ const MemberManagement = () => {
               <Th>
                 <Checkbox isChecked={checkList.length === members.length} onChange={toggleAll} />
               </Th>
-              <Th>이름</Th>
-              <Th>아이디</Th>
-              <Th>생성날짜</Th>
-              <Th>UID</Th>
+              <Th whiteSpace="nowrap">이름</Th>
+              <Th whiteSpace="nowrap">아이디</Th>
+              <Th whiteSpace="nowrap">생성날짜</Th>
+              <Th whiteSpace="nowrap">UID</Th>
             </Tr>
           </Thead>
           <Tbody>
