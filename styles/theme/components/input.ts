@@ -75,6 +75,7 @@ const variantOutline: StyleObjectOrFn = (props) => {
       border: '1px solid',
       borderRadius: 'md',
       'border-color': '#DFDFDF',
+      borderColor: '#DFDFDF',
       _hover: {
         borderColor: mode('gray.300', 'whiteAlpha.400')(props),
       },
