@@ -114,7 +114,7 @@ const CreateMember = ({ isOpen, onClose }: any) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button type="submit" isLoading={isLoading}>
+            <Button type="submit" isLoading={isLoading} colorScheme="secondary">
               생성하기
             </Button>
           </ModalFooter>

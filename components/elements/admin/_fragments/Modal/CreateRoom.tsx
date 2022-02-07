@@ -59,7 +59,9 @@ const CreateRoom = ({ isOpen, onClose }: any) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button type="submit">생성하기</Button>
+            <Button type="submit" colorScheme="secondary">
+              생성하기
+            </Button>
           </ModalFooter>
         </form>
       </ModalContent>

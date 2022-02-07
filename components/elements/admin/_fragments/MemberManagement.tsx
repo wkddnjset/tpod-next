@@ -62,7 +62,7 @@ const MemberManagement = () => {
         <Button size="sm" colorScheme="red" disabled={checkList.length < 1} onClick={onDeleteMember}>
           선택삭제
         </Button>
-        <Button size="sm" colorScheme="facebook" ml="5px" onClick={onOpen}>
+        <Button size="sm" colorScheme="primary" ml="5px" onClick={onOpen}>
           사용자생성
         </Button>
       </Flex>
@@ -86,10 +86,10 @@ const MemberManagement = () => {
                   <Td>
                     <Checkbox isChecked={checkList.includes(member.uid)} onChange={(val) => toggleCheckList(val, member.uid)} />
                   </Td>
-                  <Td>{member.name}</Td>
-                  <Td>{member.username}</Td>
-                  <Td>{moment(member.created.toDate()).format('YYYY.MM.DD')}</Td>
-                  <Td>{member.uid}</Td>
+                  <Td whiteSpace="nowrap">{member.name}</Td>
+                  <Td whiteSpace="nowrap">{member.username}</Td>
+                  <Td whiteSpace="nowrap">{moment(member.created.toDate()).format('YYYY.MM.DD')}</Td>
+                  <Td whiteSpace="nowrap">{member.uid}</Td>
                 </Tr>
               );
             })}

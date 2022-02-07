@@ -7,13 +7,19 @@ const Content = () => {
       <Container>
         <VStack alignItems="flex-start" mt="20px">
           <Link href="/admin" passHref>
-            <Button w="150px">관리자</Button>
+            <Button w="150px" colorScheme="primary">
+              관리자
+            </Button>
           </Link>
           <Link href="/auth/start" passHref>
-            <Button w="150px">로그인</Button>
+            <Button w="150px" colorScheme="primary">
+              로그인
+            </Button>
           </Link>
           <Link href="/toktokhan" passHref>
-            <Button w="150px">팀페이지</Button>
+            <Button w="150px" colorScheme="primary">
+              팀페이지
+            </Button>
           </Link>
         </VStack>
         <Text mt="20px">여기에 랜딩페이지 만들어질 예정!</Text>

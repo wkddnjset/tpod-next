@@ -1,7 +1,7 @@
-import LoginLayout from 'components/common/@Layout/LoginLayout';
+import UserLayout from 'components/common/@Layout/UserLayout';
 
 import Content from './_fragments/Content';
 
 export function TeamLoginContainer() {
-  return <LoginLayout content={<Content />} />;
+  return <UserLayout content={<Content />} />;
 }

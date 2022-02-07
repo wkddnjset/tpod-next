@@ -41,7 +41,7 @@ const PaymentManagement = () => {
     <Box py="15px">
       <CreateCard isOpen={isOpen} onClose={onClose} />
       <Flex justifyContent="flex-end" mb="20px">
-        <Button size="sm" colorScheme="facebook" ml="5px" onClick={onOpen}>
+        <Button size="sm" colorScheme="primary" ml="5px" onClick={onOpen}>
           카드 추가
         </Button>
       </Flex>

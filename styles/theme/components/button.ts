@@ -45,6 +45,13 @@ const accessibleColorMap: { [key: string]: AccessibleColor } = {
     activeBg: 'google.700',
     border: '#DDDDDD',
   },
+  secondary: {
+    bg: 'secondary.500',
+    color: '#1A1A1A',
+    hoverBg: 'secondary.600',
+    activeBg: 'secondary.700',
+    border: 'secondary.500',
+  },
 };
 
 const variantSolid: StyleObjectOrFn = (props) => {
@@ -54,6 +61,7 @@ const variantSolid: StyleObjectOrFn = (props) => {
     const bg = 'gray.100';
     return {
       bg,
+      borderRadius: 'md',
       _hover: {
         bg: 'gray.100',
         _disabled: {

@@ -43,7 +43,7 @@ const Content = () => {
   };
 
   return (
-    <Flex direction="column">
+    <Flex direction="column" w="400px" mx="auto" pt="40px">
       <Text textStyle="xl" mb={['50px', '60px', '80px']} textAlign="center">
         <strong>안녕하세요!</strong>
         <br />

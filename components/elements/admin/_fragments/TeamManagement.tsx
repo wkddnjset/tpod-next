@@ -119,7 +119,7 @@ const TeamManagement = () => {
                 {errors?.slug?.message}
               </Text>
             )}
-            <Button size="sm" mt="5px" onClick={onShare}>
+            <Button size="sm" mt="5px" onClick={onShare} colorScheme="gray">
               링크 공유하기
             </Button>
           </Box>

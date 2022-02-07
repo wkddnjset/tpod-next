@@ -48,24 +48,31 @@ const Calendar = ({ handleDayClick }: Props) => {
                 .startOf('week')
                 .add(n + i, 'day');
               // 오늘이 current와 같다면 우선 '선택'으로 두자
-              const isSelected = today.format('YYYYMMDD') === current.format('YYYYMMDD') ? 'selected' : '';
-
+              const isSelected = today.format('YYYYMMDD') === current.format('YYYYMMDD');
+              const isToday = moment().format('YYYYMMDD') === current.format('YYYYMMDD');
               // 만약, 이번 달이 아닌 다른 달의 날짜라면 회색으로 표시하자
               const isRed = i === 0;
               const isGrayed = current.format('MM') !== today.format('MM') ? 'grayed' : '';
 
+              const started = moment().add(-1, 'days');
+              const ended = moment().add(2, 'months');
+              const isActive = moment(current).isBetween(started, ended);
               return (
                 <Td
                   key={current.format('YYYYMMDD')}
-                  onClick={() => _handleDayClick(current)}
+                  onClick={() => isActive && _handleDayClick(current)}
                   cursor="pointer"
                   borderTopWidth="1px"
                   borderLeftWidth="1px"
                   p="0px"
                   h="40px"
-                  bg={isSelected ? 'primary.500' : 'white'}
+                  bg={isActive ? (isSelected ? 'primary.500' : isToday ? 'secondary.500' : 'white') : 'gray.100'}
                 >
-                  <Text fontSize="14px" textAlign="center" color={isSelected ? 'white' : isGrayed ? 'gray.200' : isRed ? 'red' : 'gray.500'}>
+                  <Text
+                    fontSize="14px"
+                    textAlign="center"
+                    color={isActive ? (isSelected ? 'white' : isToday ? 'gray.900' : isGrayed ? 'gray.200' : isRed ? 'red' : 'gray.500') : 'gray.300'}
+                  >
                     {current.format('D')}
                   </Text>
                 </Td>

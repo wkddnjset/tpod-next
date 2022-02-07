@@ -98,7 +98,7 @@ const variantOutline: StyleObjectOrFn = (props) => {
     },
     addon: {
       border: '1px solid',
-      borderRadius: 0,
+      borderRadius: 'md',
       borderColor: mode('inherit', 'whiteAlpha.50')(props),
       bg: mode('gray.100', 'whiteAlpha.300')(props),
     },

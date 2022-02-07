@@ -1,5 +1,4 @@
-import { Box, Flex, Button, Container, Tabs, TabList, TabPanels, Tab, TabPanel, Text } from '@chakra-ui/react';
-import { Alert, AlertIcon, CloseButton } from '@chakra-ui/react';
+import { Box, Flex, Button, Container, Tabs, TabList, TabPanels, Tab, TabPanel, Text, Alert, AlertIcon, CloseButton } from '@chakra-ui/react';
 import { getAuth, signOut } from 'firebase/auth';
 import Router from 'next/router';
 import { useRootState } from 'components/hooks/useRootState';
@@ -40,10 +39,12 @@ const Content = () => {
 
       <Container>
         <Flex justifyContent="flex-end" py="10px">
-          <Button onClick={logout}>로그아웃</Button>
+          <Button onClick={logout} size="sm" colorScheme="primary">
+            로그아웃
+          </Button>
         </Flex>
-        <Box mt="80px">
-          <Tabs>
+        <Box mt="20px">
+          <Tabs colorScheme="black">
             <TabList>
               <Tab fontSize="sm" _focus={{ boxShadow: 'none' }}>
                 회의실
