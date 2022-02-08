@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Text, Container } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+
+import { useRootState } from 'components/hooks/useRootState';
 
 import useGetProfile from '../../hooks/useGetProfile';
 
@@ -9,8 +11,11 @@ import { FormValues } from './type';
 import LoginForm from './LoginForm';
 
 import crypto from 'crypto-js';
+import { useEffect } from 'react';
 
 const Content = () => {
+  const { team } = useRootState((state) => state.TEAM);
+
   const getProfile = useGetProfile;
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -23,6 +28,12 @@ const Content = () => {
     formState: { errors },
   } = useForm<FormValues>();
 
+  useEffect(() => {
+    if (!team) {
+      alert('팀이 삭제되었거나 찾을 수 없습니다.');
+      router.replace('/');
+    }
+  }, []);
   const onSubmit = (data: FormValues) => {
     const { team } = router.query;
 
@@ -43,18 +54,20 @@ const Content = () => {
   };
 
   return (
-    <Flex direction="column" w="400px" mx="auto" pt="40px">
-      <Text textStyle="xl" mb={['50px', '60px', '80px']} textAlign="center">
-        <strong>안녕하세요!</strong>
-        <br />
-        아이디를 입력해주세요
-      </Text>
-      <Box>
-        <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-          <LoginForm register={register} watch={watch} errors={errors} loading={loading} />
-        </form>
-      </Box>
-    </Flex>
+    <Container>
+      <Flex direction="column" pt="40px">
+        <Text textStyle="xl" mb={['50px', '60px', '80px']} textAlign="center">
+          <strong>안녕하세요!</strong>
+          <br />
+          아이디를 입력해주세요
+        </Text>
+        <Box>
+          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+            <LoginForm register={register} watch={watch} errors={errors} loading={loading} />
+          </form>
+        </Box>
+      </Flex>
+    </Container>
   );
 };
 

@@ -7,7 +7,7 @@ const useGetTeam = async (team?: string) => {
 
   const docRef = query(collection(db, 'team'), where('slug', '==', team));
   const result = await getDocs(docRef);
-
+  console.log('result : ', result.size);
   if (result.size > 0) {
     const teamDocs = result.docs[0];
     // 유저 체크

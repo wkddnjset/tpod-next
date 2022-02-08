@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import counterSlice from 'features/Count/counterSlice';
 import loginFormSlice from 'features/LoginForm/loginFormSlice';
 import adminSlice from 'features/Admin/adminSlice';
+import teamSlice from 'features/Team/teamSlice';
 
 export function makeStore() {
   return configureStore({
@@ -10,6 +11,7 @@ export function makeStore() {
       [counterSlice.name]: counterSlice.reducer,
       [loginFormSlice.name]: loginFormSlice.reducer,
       [adminSlice.name]: adminSlice.reducer,
+      [teamSlice.name]: teamSlice.reducer,
     },
   });
 }

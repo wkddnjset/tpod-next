@@ -1,30 +1,36 @@
 import { Box, Center, Container, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { StorageGetUser } from 'utils/Storage';
 
 import Rooms from './Rooms';
+import { useRootState } from 'components/hooks/useRootState';
 
 import useGetTeam from '../hooks/useGetTeam';
 
+import { useDispatch } from 'react-redux';
+import { setTeam } from 'features/Team/teamSlice';
+
 const Content = () => {
+  const { team } = useRootState((state) => state.TEAM);
+
+  const dispatch = useDispatch();
+
   const getTeam = useGetTeam;
   const router = useRouter();
-
-  const [team, setTeam] = useState<any>(null);
 
   useEffect(() => {
     const init = async () => {
       const user = await StorageGetUser();
       const { team } = router.query;
-      if (user) {
-        if (team) {
-          const teamData = await getTeam(String(team));
-          setTeam(teamData);
-        }
-      } else {
-        router.replace(`/${team}/login`);
+      if (team) {
+        getTeam(String(team)).then((data) => {
+          dispatch(setTeam(data));
+          if (data && !user) {
+            router.replace(`/${team}/login`);
+          }
+        });
       }
     };
     init();
