@@ -3,7 +3,6 @@ import { getColor, mode } from '@chakra-ui/theme-tools';
 
 const baseStyle: StyleObjectOrFn = {
   field: {
-    borderColor: 'gray.500',
     width: '100%',
     minWidth: 0,
     outline: 0,
@@ -73,9 +72,8 @@ const variantOutline: StyleObjectOrFn = (props) => {
 
   return {
     field: {
-      border: '1px solid',
+      border: '1px solid #DFDFDF',
       borderRadius: 'md',
-      borderColor: '#DFDFDF',
       _hover: {
         borderColor: mode('gray.300', 'whiteAlpha.400')(props),
       },
@@ -97,7 +95,7 @@ const variantOutline: StyleObjectOrFn = (props) => {
       },
     },
     addon: {
-      border: '1px solid',
+      border: '1px solid #DFDFDF',
       borderRadius: 'md',
       borderColor: mode('inherit', 'whiteAlpha.50')(props),
       bg: mode('gray.100', 'whiteAlpha.300')(props),
@@ -111,7 +109,7 @@ const variantFilled: StyleObjectOrFn = (props) => {
 
   return {
     field: {
-      border: '2px solid',
+      border: '2px solid #DFDFDF',
       borderColor: 'transparent',
       borderRadius: 0,
       bg: 'gray.100',
@@ -135,7 +133,7 @@ const variantFilled: StyleObjectOrFn = (props) => {
       },
     },
     addon: {
-      border: '2px solid',
+      border: '2px solid #DFDFDF',
       borderColor: 'transparent',
       borderRadius: 0,
       bg: mode('gray.100', 'whiteAlpha.50')(props),
@@ -149,7 +147,7 @@ const variantFlushed: StyleObjectOrFn = (props) => {
 
   return {
     field: {
-      borderBottom: '1px solid',
+      borderBottom: '1px solid #DFDFDF',
       borderColor: 'inherit',
       borderRadius: 0,
       px: 0,
@@ -167,7 +165,7 @@ const variantFlushed: StyleObjectOrFn = (props) => {
       },
     },
     addon: {
-      borderBottom: '2px solid',
+      borderBottom: '2px solid #DFDFDF',
       borderColor: 'inherit',
       borderRadius: 0,
       px: 0,
