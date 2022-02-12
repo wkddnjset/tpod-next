@@ -7,17 +7,19 @@ const useGetTeam = async (team?: string) => {
 
   const docRef = query(collection(db, 'team'), where('slug', '==', team));
   const result = await getDocs(docRef);
-  console.log('result : ', result.size);
+
   if (result.size > 0) {
     const teamDocs = result.docs[0];
     // 유저 체크
     const user = await StorageGetUser();
-    const docRef = doc(db, `team/${teamDocs.id}/member`, user.uid);
-    const docSnap = await getDoc(docRef);
-    if (!docSnap.exists()) {
-      StorageClearUser();
-      Router.reload();
-      return false;
+    if (user) {
+      const docRef = doc(db, `team/${teamDocs.id}/member`, user.uid);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+        StorageClearUser();
+        Router.reload();
+        return false;
+      }
     }
     // 회의실 데이터 불러오기
     const roomRef = collection(db, `team/${teamDocs.id}/room`);

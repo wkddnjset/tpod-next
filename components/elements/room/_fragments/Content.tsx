@@ -4,32 +4,72 @@ import 'moment/locale/ko';
 
 import { useRouter } from 'next/router';
 
-import { Flex, Box, Divider, Input, Center, Text, Container, Button } from '@chakra-ui/react';
+import { Flex, Box, Divider, Input, Center, Text, Container, Button, useToast } from '@chakra-ui/react';
 
 import useGetRoom from '../hooks/useGetRoom';
+import useCreateReservation from '../hooks/useCreateReservation';
 
 import ArrowLeftIcon from 'components/common/@Icons/System/ArrowLeft2';
 import Calendar from 'components/common/Calendar';
 import TimePicker from 'components/common/TimePicker';
 
 const Content = () => {
+  const toast = useToast();
+
   const [title, setTitle] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const [room, setRoom] = useState<any>(null);
   const [date, setDate] = useState<moment.Moment>(() => moment());
   const [time, setTime] = useState<{ start: number; end: number }>({ start: -1, end: -1 });
 
+  const getRoom = useGetRoom;
+  const createReservation = useCreateReservation;
+
   const router = useRouter();
+
   const handleDayClick = (current: moment.Moment) => {
     setTime({ start: -1, end: -1 });
     setDate(current);
   };
   const handleTimeClick = (pickTime: { start: number; end: number }) => setTime(pickTime);
 
-  const getRoom = useGetRoom;
-
   const onSumbit = () => {
-    console.log('onSumbit');
+    if (!loading) {
+      setLoading(true);
+      const data = {
+        roomId: room.uid,
+        title,
+        date,
+        ...time,
+      };
+      createReservation(data)
+        .then(async () => {
+          const roomData = await getRoom(String(room.uid));
+          setRoom(roomData);
+        })
+        .finally(() => {
+          toast({
+            title: '알림',
+            description: '성공적으로 예약되었습니다.',
+            status: 'success',
+            duration: 2000,
+            isClosable: true,
+            position: 'top-right',
+          });
+          setTimeout(() => {
+            setLoading(false);
+            setTitle('');
+          }, 300);
+        });
+    }
   };
+
+  const handleKeyDown = (e: any) => {
+    if (e.key === 'Enter') {
+      onSumbit();
+    }
+  };
+
   useEffect(() => {
     const init = async () => {
       const { roomId } = router.query;
@@ -42,7 +82,9 @@ const Content = () => {
   }, [router]);
 
   const disabledTime: number[] = useMemo(() => {
-    const filterReservation = room?.reservation.filter((res: any) => moment(res.date.toDate()).isSame(moment(date)));
+    const filterReservation = room?.reservation.filter((res: any) => {
+      return moment(res.date.toDate()).format('YYYY-MM-DD') === moment(date).format('YYYY-MM-DD');
+    });
     const result: number[] = [];
     filterReservation?.map((a: any) => {
       result.push(...Array.from({ length: a.end - a.start + 1 }, (_, i) => a.start + i));
@@ -51,7 +93,6 @@ const Content = () => {
     return result;
   }, [room, date]);
 
-  console.log(disabledTime);
   if (!room) return null;
   return (
     <Box>
@@ -84,8 +125,8 @@ const Content = () => {
         </Flex>
         <Divider mt="10px" mb="20px" borderColor="primary.500" borderWidth="1px" />
         <TimePicker handleTimeClick={handleTimeClick} disabledTime={disabledTime} pickTime={time} />
-        <Input placeholder="예약내용" value={title} onChange={(v) => setTitle(v.target.value)} />
-        <Button w="100%" colorScheme="primary" mt="20px" onClick={onSumbit} disabled={!title || (time.start === -1 && time.end === -1)}>
+        <Input placeholder="예약내용" value={title} onChange={(v) => setTitle(v.target.value)} onKeyDown={handleKeyDown} />
+        <Button w="100%" colorScheme="primary" mt="20px" onClick={onSumbit} disabled={!title || (time.start === -1 && time.end === -1)} isLoading={loading}>
           회의실 예약하기
         </Button>
       </Container>

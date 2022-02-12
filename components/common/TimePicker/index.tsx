@@ -39,11 +39,32 @@ const TimePicker = ({ handleTimeClick, disabledTime, pickTime }: Props) => {
     if (!disabled) {
       if (pickTime.start === -1 || pickTime.end !== pickTime.start) {
         handleTimeClick({ start: time, end: time });
-      } else if (pickTime.start && pickTime.end === pickTime.start) {
+      } else if (pickTime.start !== -1 && pickTime.end === pickTime.start) {
+        // 기존 선택한 시간이 현재 선택한 시간보다 큼
         if (time < pickTime.start) {
-          handleTimeClick({ start: time, end: pickTime.start });
-        } else {
-          handleTimeClick({ start: pickTime.start, end: time });
+          if (disabledTime.length > 0) {
+            // 이미 예약된 구간 제외
+            if (time > disabledTime[disabledTime.length - 1] || pickTime.start < disabledTime[0]) {
+              handleTimeClick({ start: time, end: pickTime.start });
+            } else {
+              handleTimeClick({ start: time, end: time });
+            }
+          } else {
+            handleTimeClick({ start: time, end: pickTime.start });
+          }
+        }
+        // 기존 선택한 시간이 현재 선택한 시간보다 작음
+        else {
+          if (disabledTime.length > 0) {
+            // 이미 예약된 구간 제외
+            if (time < disabledTime[0] || pickTime.start > disabledTime[disabledTime.length - 1]) {
+              handleTimeClick({ start: pickTime.start, end: time });
+            } else {
+              handleTimeClick({ start: time, end: time });
+            }
+          } else {
+            handleTimeClick({ start: pickTime.start, end: time });
+          }
         }
       }
     }

@@ -30,10 +30,10 @@ const Content = () => {
 
   useEffect(() => {
     if (!team) {
-      alert('팀이 삭제되었거나 찾을 수 없습니다.');
-      router.replace('/');
+      router.replace(`${window.location.pathname.replace('/login', '')}`);
     }
   }, []);
+
   const onSubmit = (data: FormValues) => {
     const { team } = router.query;
 

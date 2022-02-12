@@ -3,6 +3,7 @@ import { getColor, mode } from '@chakra-ui/theme-tools';
 
 const baseStyle: StyleObjectOrFn = {
   field: {
+    borderColor: 'gray.500',
     width: '100%',
     minWidth: 0,
     outline: 0,
@@ -74,7 +75,6 @@ const variantOutline: StyleObjectOrFn = (props) => {
     field: {
       border: '1px solid',
       borderRadius: 'md',
-      // 'border-color': '#DFDFDF',
       borderColor: '#DFDFDF',
       _hover: {
         borderColor: mode('gray.300', 'whiteAlpha.400')(props),

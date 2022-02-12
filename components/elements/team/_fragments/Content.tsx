@@ -1,6 +1,6 @@
 import { Box, Center, Container, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { StorageGetUser } from 'utils/Storage';
 
@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { setTeam } from 'features/Team/teamSlice';
 
 const Content = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   const { team } = useRootState((state) => state.TEAM);
 
   const dispatch = useDispatch();
@@ -26,17 +27,25 @@ const Content = () => {
       const { team } = router.query;
       if (team) {
         getTeam(String(team)).then((data) => {
-          dispatch(setTeam(data));
           if (data && !user) {
             router.replace(`/${team}/login`);
           }
+          dispatch(setTeam(data));
+          setTimeout(() => {
+            setLoading(false);
+          }, 400);
         });
       }
     };
     init();
   }, [router]);
 
+  useEffect(() => {
+    return () => setLoading(false); // cleanup function을 이용
+  }, []);
+
   if (!team) return null;
+  if (loading) return null;
   return (
     <Box>
       <Center as="nav" h="60px" borderBottomWidth="1px">
